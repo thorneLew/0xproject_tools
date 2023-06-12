@@ -62,6 +62,11 @@ const args = yargs
         choices: ['TypeScript', 'Python'],
         default: 'TypeScript',
     })
+   .option('abiBasePath', {
+        describe: 'Language of output file to generate',
+        type: 'string',
+        default: 'src/abis',
+    })
     .example(
         "$0 --abis 'src/artifacts/**/*.json' --out 'src/contracts/generated/' --debug --partials 'src/templates/partials/**/*.handlebars' --template 'src/templates/contract.handlebars'",
         'Full usage example',
@@ -275,6 +280,7 @@ for (const abiFileName of abiFileNames) {
         methods: methodsData,
         events: eventsData,
         debug: args.debug,
+        abiBasePath: args.abiBasePath
     };
     const renderedCode = template(contextData);
     utils.writeOutputFile(outFilePath, renderedCode);
